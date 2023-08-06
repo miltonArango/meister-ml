@@ -34,6 +34,14 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
+## Create Docker image
+build:
+	docker build . -t mia/meister-ml-inference
+
+# Run the inference container
+run:
+	docker run -p8000:8000 mia/meister-ml-inference
+
 ## Lint using flake8
 lint:
 	flake8 src

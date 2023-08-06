@@ -1,4 +1,4 @@
-meister_challenge
+Meister ML Challenge
 ==============================
 
 Meister take home ML challenge
@@ -35,6 +35,9 @@ Project Organization
     ├── src                <- Source code for use in this project.
     │   ├── __init__.py    <- Makes src a Python module
     │   │
+    │   ├── api            <- Rest API for model inference
+    │   │   └── app.py
+    |   |
     │   ├── data           <- Scripts to download or generate data
     │   │   └── make_dataset.py
     │   │
@@ -49,7 +52,9 @@ Project Organization
     │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
     │       └── visualize.py
     │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+    └── tox.ini                   <- tox file with settings for running tox; see tox.readthedocs.io
+    └── Dockerfile                <- Dockerfile for the model inference API
+    └── docker-compose-prod.yaml  <- Docker compose spec for Apache Airflow (Can be used for data pipelines/automation) can also include MLflow for MLOps
 
 
 --------
@@ -59,5 +64,33 @@ Project Organization
 ## Dependencies
 
 ```bash
-pip install -r requirements.txt
+make requirements
 ```
+
+## Notebooks
+The Jupyter notebooks with the Exploratory analysis and model training can be found in the __notebooks__ directory.
+
+## Deployment Considerations
+I selected [Ray](https://www.ray.io/) model serve API to develop the model inference. Ray allows for batch or real-time inference, and has production grade features that can make the model productization easier.
+
+Some of the main characteristics:
+* Pythonic API
+* Low latency, high throughput
+* Multi-model composition
+* FastAPI Integration
+* Native GPU support
+
+For a production deployment there's KubeRay operator to run the inference in a distributed mode in Kubernetes, allowing auto-scaling, deployment strategies, etc...
+
+## Run Inference Image
+```bash
+make run
+```
+
+
+
+## References
+
+* https://docs.ray.io/en/latest/serve/tutorials/text-classification.html
+* https://huggingface.co/docs/transformers/main/tasks/sequence_classification
+* https://pytorch.org/serve/inference_api.html
