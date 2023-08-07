@@ -82,12 +82,36 @@ Some of the main characteristics:
 
 For a production deployment there's KubeRay operator to run the inference in a distributed mode in Kubernetes, allowing auto-scaling, deployment strategies, etc...
 
+
+## Build the Inference Image
+```bash
+make build
+```
+
 ## Run Inference Image
 ```bash
 make run
 ```
 
+## Testing the Model Inference
+The inference enpoint expects a text input of the concatenation of __idea_title__ and __map_title__ as the parameter __sentence__.
 
+OpenAPI Spec: http://127.0.0.1:8000/docs
+
+
+```bash
+curl --location 'http://127.0.0.1:8000/classify?sentence=%22Mapa%20aprende%20un%20nuevo%20lenguaje%22'
+```
+
+Output:
+```json
+[
+    {
+        "label": "Education",
+        "score": 0.9989756345748901
+    }
+]
+```
 
 ## References
 
